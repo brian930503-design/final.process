@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-grid">
+    
+    <!-- 穿搭推薦與天氣區塊 (F-01) -->
+    <section class="card feature-card">
+        <h2>今日推薦穿搭</h2>
+        <div class="weather-info">
+            <span class="weather-icon">☀️</span>
+            <div class="weather-details">
+                <p class="condition">{{ data.weather.condition }}</p>
+                <p class="temp-range">{{ data.weather.temp_low }}°C - {{ data.weather.temp_high }}°C</p>
+            </div>
+        </div>
+        <div class="outfit-recommendation">
+            <div class="clothing-item">
+                <span class="emoji">👕</span>
+                <p>{{ data.recommendation.top }}</p>
+            </div>
+            <div class="clothing-item">
+                <span class="emoji">👖</span>
+                <p>{{ data.recommendation.bottom }}</p>
+            </div>
+            <div class="clothing-item">
+                <span class="emoji">👟</span>
+                <p>{{ data.recommendation.shoes }}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 即時狀態顯示區塊 (F-05, F-06) -->
+    <section class="card status-card">
+        <h2>衣櫥狀態</h2>
+        <div class="sensor-data">
+            <div class="sensor-item">
+                <span class="label">溫度</span>
+                <span class="value" id="val-temp">{{ data.temperature }}°C</span>
+            </div>
+            <div class="sensor-item">
+                <span class="label">濕度</span>
+                <span class="value" id="val-humidity">{{ data.humidity }}%</span>
+            </div>
+            <div class="sensor-item">
+                <span class="label">UVC 殺菌燈</span>
+                <span class="value" id="val-uvc">{{ data.uvc_status }}</span>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn btn-primary btn-large" id="btn-dehumidify">
+                <span class="icon">💧</span> 手動開啟除濕
+            </button>
+            <button class="btn btn-secondary btn-large" id="btn-uvc">
+                <span class="icon">✨</span> 手動開啟殺菌
+            </button>
+        </div>
+    </section>
+
+    <!-- 衣物管理區塊 (F-02) -->
+    <section class="card wardrobe-card" id="wardrobe">
+        <h2>衣物管理</h2>
+        
+        <!-- 搜尋區塊要明顯 -->
+        <div class="search-section">
+            <input type="text" id="clothes-search" class="search-input" placeholder="🔍 搜尋衣物 (例如: 白色 T 恤)...">
+            <button class="btn btn-search">搜尋</button>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="clothesChart"></canvas>
+        </div>
+    </section>
+</div>
+
+<!-- 吐司通知 (Toast Notification) 模擬通知 -->
+<div id="toast" class="toast hidden">
+    <p id="toast-message">操作成功</p>
+</div>
+{% endblock %}

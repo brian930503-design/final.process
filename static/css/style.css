@@ -1,0 +1,330 @@
+/* CSS Variables for Minimalist Theme */
+:root {
+    --primary-color: #2b6cb0;      /* Deep Blue */
+    --primary-hover: #2c5282;
+    --secondary-color: #4a5568;    /* Dark Gray */
+    --secondary-hover: #2d3748;
+    --bg-color: #f7fafc;           /* Light Gray / Off-white */
+    --card-bg: #ffffff;
+    --text-main: #1a202c;
+    --text-muted: #718096;
+    --border-color: #e2e8f0;
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --transition: all 0.2s ease-in-out;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* Typography */
+h1, h2, h3 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Layout */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* Header & Nav */
+.navbar {
+    background-color: var(--card-bg);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+}
+
+.navbar h1 {
+    font-size: 1.25rem;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+}
+
+.navbar a {
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.navbar a:hover, .navbar a.active {
+    color: var(--primary-color);
+}
+
+/* Main Content & Grid */
+.main-content {
+    padding-top: 32px;
+    padding-bottom: 64px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+@media (min-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .wardrobe-card {
+        grid-column: span 2;
+    }
+}
+
+@media (min-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .wardrobe-card {
+        grid-column: span 1;
+    }
+}
+
+/* Cards */
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+.card h2 {
+    font-size: 1.25rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+/* Feature 1: Weather & Outfit */
+.weather-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.weather-icon {
+    font-size: 3rem;
+}
+
+.weather-details .condition {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.weather-details .temp-range {
+    color: var(--text-muted);
+}
+
+.outfit-recommendation {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.clothing-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--bg-color);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.clothing-item .emoji {
+    font-size: 1.5rem;
+}
+
+/* Feature 2: Sensor Data */
+.sensor-data {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.sensor-item {
+    background-color: var(--bg-color);
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sensor-item .label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.sensor-item .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Buttons */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.btn .icon {
+    margin-right: 8px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.btn-large {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.125rem;
+}
+
+/* Feature 3: Wardrobe Search & Chart */
+.search-section {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 16px;
+    font-size: 1.125rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    font-family: inherit;
+    outline: none;
+}
+
+.search-input:focus {
+    box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.2);
+}
+
+.btn-search {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0 24px;
+}
+
+.btn-search:hover {
+    background-color: var(--primary-hover);
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: #38a169; /* Green */
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1000;
+    opacity: 0;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+    .navbar ul {
+        display: none; /* Hide nav links on very small screens for prototype */
+    }
+    .search-section {
+        flex-direction: column;
+    }
+    .btn-search {
+        width: 100%;
+        padding: 16px;
+    }
+}
