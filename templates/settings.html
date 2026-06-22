@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="settings-container card" style="max-width: 600px;">
+    <h2>個人設定</h2>
+
+    <!-- 穿搭日記 -->
+    <div id="tab-diary" class="settings-tab-content" style="display: block;">
+        <h3>👗 今日穿搭滿意度紀錄</h3>
+        <p>請告訴我們您對今天系統推薦或客製化穿搭的想法，這能幫助我們改進未來的推薦準確度！</p>
+        
+        <form id="satisfaction-form" class="mt-4">
+            <div class="form-group">
+                <label for="rating">滿意度評分 (1-5)</label>
+                <select id="rating" class="search-input" required>
+                    <option value="5">⭐⭐⭐⭐⭐ 非常滿意</option>
+                    <option value="4">⭐⭐⭐⭐ 滿意</option>
+                    <option value="3">⭐⭐⭐ 普通</option>
+                    <option value="2">⭐⭐ 不太滿意</option>
+                    <option value="1">⭐ 糟糕</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="feedback">穿搭看法與建議</label>
+                <div style="margin-bottom: 8px;">
+                    <button type="button" id="btn-copy-outfit" class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.9em;">📋 複製今日建議穿搭</button>
+                </div>
+                <textarea id="feedback" class="search-input" rows="4" placeholder="例如：今天的顏色搭配我很喜歡，但希望可以推薦長版外套..."></textarea>
+            </div>
+            
+            <button type="button" id="btn-submit-satisfaction" class="btn btn-primary btn-large">送出回饋</button>
+        </form>
+    </div>
+
+    <!-- 佈景主題 -->
+    <div id="tab-theme" class="settings-tab-content" style="display: none;">
+        <h3>🎨 佈景深淺色切換</h3>
+        <p>點擊按鈕切換網站外觀主題：</p>
+        <div class="mt-4">
+            <button id="btn-theme-light" class="btn btn-secondary" style="margin-right: 12px;">☀️ 淺色模式</button>
+            <button id="btn-theme-dark" class="btn btn-secondary">🌙 深色模式</button>
+        </div>
+    </div>
+
+    <!-- 修改密碼 -->
+    <div id="tab-password" class="settings-tab-content" style="display: none;">
+        <h3>🔒 修改密碼</h3>
+        <p>為保護您的帳號安全，修改密碼後會自動登出。</p>
+        <form id="change-password-form" class="mt-4">
+            <div class="form-group">
+                <label for="old-password">目前的舊密碼</label>
+                <input type="password" id="old-password" class="search-input" required>
+            </div>
+            <div class="form-group">
+                <label for="new-password">新密碼</label>
+                <input type="password" id="new-password" class="search-input" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-large">確認修改</button>
+        </form>
+    </div>
+</div>
+
+<!-- 吐司通知 (Toast Notification) -->
+<div id="toast" class="toast hidden">
+    <p id="toast-message"></p>
+</div>
+
+<script>
+function switchSettingsTab(tabName) {
+    document.querySelectorAll('.settings-tab-content').forEach(el => el.style.display = 'none');
+    document.getElementById('tab-' + tabName).style.display = 'block';
+}
+
+// On Page Load, check for tab parameter
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab');
+    if (tab && ['diary', 'theme', 'password'].includes(tab)) {
+        switchSettingsTab(tab);
+    }
+    
+    // Copy Outfit Logic
+    const btnCopyOutfit = document.getElementById('btn-copy-outfit');
+    if (btnCopyOutfit) {
+        btnCopyOutfit.addEventListener('click', () => {
+            const feedbackTextarea = document.getElementById('feedback');
+            const outfitText = "今日推薦穿搭：上衣 - {{ data.recommendation.top }} / 褲子 - {{ data.recommendation.bottom }} / 鞋子 - {{ data.recommendation.shoes }}\n\n我的心得：";
+            feedbackTextarea.value = outfitText;
+            feedbackTextarea.focus();
+        });
+    }
+});
+</script>
+{% endblock %}

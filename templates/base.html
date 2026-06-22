@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智慧衣櫥 Smart Closet</title>
+    <title>穿搭小幫手 - Smart Closet Prototype</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,12 +16,22 @@
 <body>
     <header class="navbar">
         <div class="container">
-            <h1>智慧衣櫥</h1>
+            <h1>穿搭小幫手</h1>
             <nav>
                 <ul>
-                    <li><a href="#" class="active">首頁</a></li>
-                    <li><a href="#wardrobe">衣物管理</a></li>
-                    <li><a href="#settings">設定</a></li>
+                    <li><a href="/" {% if request.path == '/' %}class="active"{% endif %}>首頁</a></li>
+                    {% if session.get('logged_in') or session.get('user_id') %}
+                        <li><a href="/diary" {% if request.path == '/diary' %}class="active"{% endif %}>日記記事本</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropbtn {% if request.path == '/settings' %}active{% endif %}">設定 ▼</a>
+                            <div class="dropdown-content">
+                                <a href="/settings?tab=diary">穿搭日記</a>
+                                <a href="/settings?tab=theme">佈景主題</a>
+                                <a href="/settings?tab=password">修改密碼</a>
+                            </div>
+                        </li>
+                        <li><a href="/logout">登出 ({{ session.get('username') }})</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>

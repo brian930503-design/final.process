@@ -13,19 +13,30 @@
                 <p class="temp-range">{{ data.weather.temp_low }}°C - {{ data.weather.temp_high }}°C</p>
             </div>
         </div>
-        <div class="outfit-recommendation">
+        <div class="outfit-recommendation" id="outfit-recommendation-container">
             <div class="clothing-item">
                 <span class="emoji">👕</span>
-                <p>{{ data.recommendation.top }}</p>
+                <p id="rec-top">{{ data.recommendation.top }}</p>
             </div>
             <div class="clothing-item">
                 <span class="emoji">👖</span>
-                <p>{{ data.recommendation.bottom }}</p>
+                <p id="rec-bottom">{{ data.recommendation.bottom }}</p>
             </div>
             <div class="clothing-item">
                 <span class="emoji">👟</span>
-                <p>{{ data.recommendation.shoes }}</p>
+                <p id="rec-shoes">{{ data.recommendation.shoes }}</p>
             </div>
+        </div>
+
+        <!-- 客製化穿搭篩選區塊 (F-08) -->
+        <div class="custom-filter-section mt-4" style="border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 16px;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 12px;">客製化篩選推薦</h3>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                <input type="text" id="filter-color" class="search-input" style="padding: 8px; flex: 1; min-width: 80px;" placeholder="顏色 (如: 黑色)">
+                <input type="text" id="filter-style" class="search-input" style="padding: 8px; flex: 1; min-width: 80px;" placeholder="款式 (如: 長袖)">
+                <input type="text" id="filter-category" class="search-input" style="padding: 8px; flex: 1; min-width: 80px;" placeholder="類別 (如: 帽T)">
+            </div>
+            <button id="btn-custom-filter" class="btn btn-secondary" style="width: 100%;">重新產生推薦</button>
         </div>
     </section>
 
@@ -61,16 +72,70 @@
     <section class="card wardrobe-card" id="wardrobe">
         <h2>衣物管理</h2>
         
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+            <button id="btn-add-clothes" class="btn btn-primary" style="flex: 1;">➕ 新增衣物</button>
+            <button id="btn-all-clothes" class="btn btn-secondary" style="flex: 1;">📋 所有衣物</button>
+        </div>
+
         <!-- 搜尋區塊要明顯 -->
         <div class="search-section">
             <input type="text" id="clothes-search" class="search-input" placeholder="🔍 搜尋衣物 (例如: 白色 T 恤)...">
-            <button class="btn btn-search">搜尋</button>
+            <button class="btn btn-search">搜尋從資料庫過濾</button>
         </div>
 
         <div class="chart-container">
             <canvas id="clothesChart"></canvas>
         </div>
     </section>
+</div>
+
+<!-- Modal: 新增衣物 -->
+<div id="modal-add-clothes" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h3>新增衣物</h3>
+        <form id="add-clothes-form" class="mt-4">
+            <div class="form-group">
+                <label>名稱 (如：黑色長袖帽T)</label>
+                <input type="text" id="clothes-name" required>
+            </div>
+            <div class="form-group">
+                <label>類別</label>
+                <select id="clothes-category" required>
+                    <option value="上衣">上衣</option>
+                    <option value="褲子">褲子</option>
+                    <option value="外套">外套</option>
+                    <option value="洋裝">洋裝</option>
+                    <option value="鞋子">鞋子</option>
+                    <option value="帽子">帽子</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>顏色</label>
+                <input type="text" id="clothes-color">
+            </div>
+            <div class="form-group">
+                <label>款式</label>
+                <input type="text" id="clothes-style">
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">儲存</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" style="flex: 1;">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: 所有衣物 / 搜尋結果 -->
+<div id="modal-clothes-list" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h3 id="clothes-list-title">衣物清單</h3>
+        <div class="clothes-list-container" id="clothes-list-container">
+            <!-- JS dynamically inserts items here -->
+        </div>
+        <div style="margin-top: 24px;">
+            <button type="button" class="btn btn-secondary btn-close-modal" style="width: 100%;">關閉</button>
+        </div>
+    </div>
 </div>
 
 <!-- 吐司通知 (Toast Notification) 模擬通知 -->

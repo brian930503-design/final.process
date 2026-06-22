@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-container card">
+    <div class="auth-tabs">
+        <button class="auth-tab {% if active_tab == 'login' %}active{% endif %}" onclick="switchTab('login')">登入</button>
+        <button class="auth-tab {% if active_tab == 'register' %}active{% endif %}" onclick="switchTab('register')">註冊</button>
+    </div>
+
+    {% if error %}
+    <div class="auth-error">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <div id="login-form" class="auth-form" style="display: {% if active_tab == 'login' %}block{% else %}none{% endif %};">
+        <h2>歡迎回來</h2>
+        <form action="/auth" method="POST">
+            <input type="hidden" name="action" value="login">
+            <div class="form-group">
+                <label for="login-username">帳號</label>
+                <input type="text" id="login-username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">密碼</label>
+                <input type="password" id="login-password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-large">登入</button>
+        </form>
+    </div>
+
+    <div id="register-form" class="auth-form" style="display: {% if active_tab == 'register' %}block{% else %}none{% endif %};">
+        <h2>建立新帳號</h2>
+        <form action="/auth" method="POST">
+            <input type="hidden" name="action" value="register">
+            <div class="form-group">
+                <label for="reg-username">帳號</label>
+                <input type="text" id="reg-username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="reg-password">密碼</label>
+                <input type="password" id="reg-password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-secondary btn-large">註冊</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function switchTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector('.auth-tab[onclick="switchTab(\'' + tab + '\')"]').classList.add('active');
+    
+    if (tab === 'login') {
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('register-form').style.display = 'none';
+    } else {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('register-form').style.display = 'block';
+    }
+}
+</script>
+{% endblock %}
